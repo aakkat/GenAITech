@@ -1,0 +1,30 @@
+# Importing the necessary Gemini library
+import os
+import google.generativeai as gemini
+
+# Set the environment variable (only for the session)
+os.environ['GEMINI_API_KEY'] = "<COPY PASTE API KEY>"
+
+# Fetch the API key from the environment variable
+api_key = os.getenv('GEMINI_API_KEY')
+
+# Setting the API key
+gemini.configure(api_key=api_key)
+
+# Setting the text model
+model = gemini.GenerativeModel('gemini-1.5-flash')
+
+# Loading Image
+from PIL import Image
+img = Image.open('/content/sample_data/cat-wearing-hat.jfif')
+
+# Interacting with the image
+response_one = model.generate_content([img, "Is there a dog in this image?"])
+response_two = model.generate_content([img, "What is this animal?"])
+
+# Printing the responses
+print(response_one.text)
+print(response_two.text)
+
+#To get detail of model
+gemini.get_model(model.model_name)
